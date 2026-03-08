@@ -1,0 +1,33 @@
+# Values consumed by the Argo CD whoami Application when it renders the
+# third-party cowboysysop/whoami chart.
+fullnameOverride: whoami
+
+serviceAccount:
+  create: false
+
+replicaCount: 1
+
+image:
+  repository: traefik/whoami
+  tag: v1.10.4
+
+service:
+  type: ClusterIP
+
+readinessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
+
+livenessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 15
+  failureThreshold: 3
+
+resources:
+  requests:
+    cpu: 20m
+    memory: 32Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
