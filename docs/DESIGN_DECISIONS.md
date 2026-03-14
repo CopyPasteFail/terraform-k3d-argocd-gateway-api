@@ -14,7 +14,7 @@
 - Alternatives considered: Unofficial third-party k3d Terraform providers, shell-only scripts without Terraform state ownership.
 - Rationale: Keeps Terraform as the orchestration and state layer while relying on the mature `k3d` CLI for actual cluster lifecycle operations.
 - Tradeoffs: Local-exec is less declarative than a well-supported native provider resource.
-- Implications: Host tooling (`k3d`, `kubectl`) must be present in WSL.
+- Implications: Host tooling (`k3d`, `kubectl`) must be present on the local Debian-family Linux environment.
 
 ## Decision 3: Maintain a repo-local kubeconfig file for the managed cluster
 
@@ -138,7 +138,7 @@
 
 - Selected option: `scripts/up.sh` infers `GIT_REPOSITORY_URL` from `git remote get-url origin` when the variable is unset.
 - Alternatives considered: Mandatory manual export of `GIT_REPOSITORY_URL`.
-- Rationale: Reduces bootstrap friction in WSL while keeping the ArgoCD Git source explicit.
+- Rationale: Reduces bootstrap friction on the local Debian-family Linux environment while keeping the ArgoCD Git source explicit.
 - Additional rationale: ArgoCD needs a cloneable repository URL from inside the cluster, so GitHub SSH origin (`git@github.com:OWNER/REPO.git`) is normalized to HTTPS (`https://github.com/OWNER/REPO.git`).
 - Tradeoffs: Default flow intentionally supports only clear GitHub clone URL formats and fails fast for unsupported origins.
 - Implications: Users can still override with explicit `GIT_REPOSITORY_URL`; private repo sync still requires ArgoCD repository credentials.
@@ -147,7 +147,7 @@
 
 - Selected option: `scripts/up.sh` optionally loads a repo-root `.env` file before input validation.
 - Alternatives considered: Terraform variables, pre-created Kubernetes Secrets, external secret managers.
-- Rationale: This repository is optimized for fast local bootstrap in WSL; `.env` avoids repetitive manual exports while keeping the script interface simple.
+- Rationale: This repository is optimized for fast local bootstrap on Debian-family Linux; `.env` avoids repetitive manual exports while keeping the script interface simple.
 - Tradeoffs: `.env` is convenience-first local handling, not a hardened long-term secret-management pattern.
 - Override model: Explicitly exported environment variables still take precedence over `.env` values.
 - Why alternatives were not default:

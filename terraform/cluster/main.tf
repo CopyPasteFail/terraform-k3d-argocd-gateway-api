@@ -38,12 +38,12 @@ resource "null_resource" "k3d_cluster" {
       # Optional guardrails for direct Terraform usage.
       if [[ "${var.is_tool_validation_enabled}" == "true" ]]; then
         if ! command -v k3d >/dev/null 2>&1; then
-          echo "k3d is required but not installed. Install k3d inside WSL and retry."
+          echo "k3d is required but not installed. Install k3d and retry."
           exit 1
         fi
 
         if ! command -v kubectl >/dev/null 2>&1; then
-          echo "kubectl is required but not installed. Install kubectl inside WSL and retry."
+          echo "kubectl is required but not installed. Install kubectl and retry."
           exit 1
         fi
       fi

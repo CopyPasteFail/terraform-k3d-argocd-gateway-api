@@ -20,7 +20,7 @@
 
 ## Why these limitations exist
 
-- The stack is optimized for reproducible local platform setup in WSL.
+- The stack is optimized for reproducible local platform setup on Debian-family Linux.
 - The default architecture prioritizes portability in Gateway API resources.
 - Traefik is the Gateway API controller, while ngrok is intentionally limited to hostname exposure.
 - Advanced controller-specific features are intentionally deferred.
